@@ -1,0 +1,15 @@
+name = "blog-friend-circle"
+compatibility_date = "2023-12-01"
+
+[vars]
+API_ENDPOINT = "https://reader.miniflux.app"
+API_TOKEN = ""
+CATEGORY_ID = ""
+
+[[kv_namespaces]]
+binding = "API_CACHE_KV"
+id = ""
+preview_id = ""
+
+[site]
+bucket = "./public"
