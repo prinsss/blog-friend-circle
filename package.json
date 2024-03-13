@@ -1,13 +1,18 @@
 {
   "scripts": {
-    "dev": "wrangler dev src/index.ts",
-    "deploy": "wrangler deploy --minify src/index.ts"
+    "dev": "wrangler dev",
+    "dev:client": "tsup --watch",
+    "build": "tsup && wrangler deploy --dry-run --outdir dist",
+    "deploy": "tsup && wrangler deploy"
   },
   "dependencies": {
+    "dayjs": "^1.11.10",
     "hono": "^4.1.0"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240312.0",
+    "tsup": "^8.0.2",
+    "typescript": "^5.4.2",
     "wrangler": "^3.33.0"
   }
 }

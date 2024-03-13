@@ -48,6 +48,7 @@ npm run deploy
 ```bash
 npx wrangler kv:namespace create API_CACHE_KV --preview
 npm run dev
+npm run dev:client
 ```
 
 ## Acknowledgements
