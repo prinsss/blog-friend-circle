@@ -1,5 +1,5 @@
 import { Hono } from 'hono';
-import { etag } from 'hono/etag';
+import { cache } from 'hono/cache';
 import { logger } from 'hono/logger';
 import { serveStatic } from 'hono/cloudflare-workers';
 import manifest from '__STATIC_CONTENT_MANIFEST';
@@ -13,8 +13,23 @@ const app = new Hono<Environment>();
 
 app.use(logger());
 
-app.get('/app.js', etag(), serveStatic({ path: './app.js', manifest }));
-app.get('/style.css', etag(), serveStatic({ path: './style.css', manifest }));
+app.get(
+  '/app.js',
+  cache({
+    cacheName: 'static',
+    cacheControl: 'max-age=3600',
+  }),
+  serveStatic({ path: './app.js', manifest })
+);
+
+app.get(
+  '/style.css',
+  cache({
+    cacheName: 'static',
+    cacheControl: 'max-age=3600',
+  }),
+  serveStatic({ path: './style.css', manifest })
+);
 
 // Home page.
 app.get('/', (c) => {
@@ -55,19 +70,25 @@ app.get('/category/:id/entries', async (c) => {
   );
 });
 
-app.get('/icon/:id', etag(), async (c) => {
-  const id = Number(c.req.param().id);
-  const { data, mime_type } = await api(c).getIcon(id);
-  const imageBlob = base64ToBlob(data, mime_type);
+app.get(
+  '/icon/:id',
+  cache({
+    cacheName: 'static',
+    cacheControl: 'max-age=2592000',
+  }),
+  async (c) => {
+    const id = Number(c.req.param().id);
+    const { data, mime_type } = await api(c).getIcon(id);
+    const imageBlob = base64ToBlob(data, mime_type);
 
-  return new Response(imageBlob, {
-    status: 200,
-    headers: {
-      'Content-Type': mime_type,
-      'Content-Length': `${imageBlob.size}`,
-      'Cache-Control': 'public, max-age=2592000',
-    },
-  });
-});
+    return new Response(imageBlob, {
+      status: 200,
+      headers: {
+        'Content-Type': mime_type,
+        'Content-Length': `${imageBlob.size}`,
+      },
+    });
+  }
+);
 
 export default app;
