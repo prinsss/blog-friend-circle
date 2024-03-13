@@ -43,6 +43,37 @@ npx wrangler kv:namespace create API_CACHE_KV
 npm run deploy
 ```
 
+## Usage
+
+Embedding the friend circle into your page is as easy as adding a `script` tag:
+
+```html
+<script async src="https://circle.example.workers.dev/client.js"></script>
+```
+
+It will automatically initialize a `iframe` and render the friend circle on your page. You can also pass some options to customize the appearance:
+
+```jsx
+<script
+  // Default page to show when loaded. Available options: "blogs", "posts"
+  data-page="blogs"
+  // Set class name of iframe element.
+  data-class="bfc-frame"
+  // Set loading attribute of iframe element. Available options: "lazy", "eager"
+  data-loading="lazy"
+  // Set scrolling attribute of iframe element. Available options: "yes", "no", "auto"
+  data-scrolling="no"
+  // Set inline style of iframe element.
+  data-style="width: 100%; border: none; min-height: 150px"
+  // Set inline style of loading text element.
+  data-loading-style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%)"
+  // Disable the behavior of resizing iframe to fit its content.
+  data-no-resize="false"
+  src="https://circle.example.workers.dev/client.js"
+  async
+></script>
+```
+
 ## Development
 
 ```bash
@@ -54,6 +85,8 @@ npm run dev:client
 ## Acknowledgements
 
 This project is greatly inspired by [hexo-circle-of-friends](https://github.com/Rock-Candy-Tea/hexo-circle-of-friends) and [planet.js](https://github.com/phoenixlzx/planet.js).
+
+The default theme is inspired by [Miniflux](https://github.com/miniflux/v2)'s web reader. The design of loading script is inspired by [giscus](https://github.com/giscus/giscus).
 
 ## License
 
