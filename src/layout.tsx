@@ -1,48 +1,57 @@
-import { html } from 'hono/html';
-import { FC, PropsWithChildren } from 'hono/jsx';
-import { AppStyle } from './styles';
+import { raw } from 'hono/html';
+import { PropsWithChildren } from 'hono/jsx';
 import { Entry, Feed } from './types';
 import { formatDate, toRelativeTime } from './utils';
-
-export const Layout = (props: PropsWithChildren<{ page: string }>) => html`
-  <html>
-    <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>blog-friend-circle</title>
-      ${(<AppStyle />)}
-    </head>
-    <body>
-      <nav>
-        <a class="${props.page === 'posts' ? 'active' : ''}" href="/posts">Posts</a>
-        <a class="${props.page === 'blogs' ? 'active' : ''}" href="/blogs">Blogs</a>
-        <a href="https://github.com/prinsss/blog-friend-circle" target="_blank" rel="noopener">
-          About
-        </a>
-      </nav>
-      <div class="bfc-container">${props.children}</div>
-    </body>
-    <script>
-      window.addEventListener('load', (event) => {
-        const el = document.querySelector('html');
-        const height = Math.ceil(el.offsetHeight);
-        window.parent.postMessage({ type: 'resize', value: height }, '*');
-      });
-
-      window.addEventListener('unload', (event) => {
-        window.parent.postMessage({ type: 'resize', value: 150 }, '*');
-      });
-    </script>
-  </html>
-`;
 
 export const ExternalLink = (props: Hono.AnchorHTMLAttributes) => (
   // We keep the referrer here so that the target site can see where the traffic is coming from.
   <a target="_blank" rel="noopener" {...props} />
 );
 
+export const NavLink = (props: Hono.AnchorHTMLAttributes & { isActive?: boolean }) => (
+  <a class={`${props.isActive ? 'active' : ''} ${props.class}`} {...props} />
+);
+
+export const Layout = (props: PropsWithChildren<{ page: string; categoryId: number }>) => (
+  <html>
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>blog-friend-circle</title>
+      <link rel="stylesheet" href="/style.css" />
+    </head>
+    <body>
+      <nav>
+        <NavLink href={`/category/${props.categoryId}/entries`} isActive={props.page === 'posts'}>
+          Posts
+        </NavLink>
+        <NavLink href={`/category/${props.categoryId}/feeds`} isActive={props.page === 'blogs'}>
+          Blogs
+        </NavLink>
+        <a href="https://github.com/prinsss/blog-friend-circle" target="_blank" rel="noopener">
+          About
+        </a>
+      </nav>
+      <div class="bfc-container">{props.children}</div>
+    </body>
+    <script>
+      {raw`
+        window.addEventListener('load', (event) => {
+          const el = document.querySelector('html');
+          const height = Math.ceil(el.offsetHeight);
+          window.parent.postMessage({ type: 'resize', value: height }, '*');
+        });
+
+        window.addEventListener('unload', (event) => {
+          window.parent.postMessage({ type: 'resize', value: 150 }, '*');
+        });
+      `}
+    </script>
+  </html>
+);
+
 export const BlogItem = ({ data }: PropsWithChildren<{ data: Feed }>) => (
-  <article class="item blog-item">
+  <article class="item">
     <h2 class="item-title">
       <img src={`/icon/${data.icon.icon_id}`} height="16" loading="lazy" alt={data.title} />
       <ExternalLink href={data.site_url}>{data.title}</ExternalLink>
@@ -64,7 +73,7 @@ export const BlogItem = ({ data }: PropsWithChildren<{ data: Feed }>) => (
 );
 
 export const PostItem = ({ data }: PropsWithChildren<{ data: Entry }>) => (
-  <article class="item blog-item">
+  <article class="item">
     <h2 class="item-title">
       <img src={`/icon/${data.feed.icon.icon_id}`} height="16" loading="lazy" alt={data.title} />
       <ExternalLink href={data.url}>{data.title}</ExternalLink>
