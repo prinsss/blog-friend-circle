@@ -2,26 +2,41 @@
 (function () {
   const script = document.currentScript as HTMLScriptElement;
   const origin = new URL(script.src).origin;
-  const attributes = script.dataset;
 
-  // Inline styles.
-  const defaultIFrameStyle = 'width: 100%; border: none; min-height: 150px';
-  const defaultLoadingStyle =
-    'position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%)';
+  // Parse config from script attributes.
+  const config = Object.assign(
+    {
+      page: 'blogs',
+      categoryId: '0',
+      class: 'bfc-frame',
+      loading: 'lazy',
+      scrolling: 'no',
+      noResize: 'false',
+      style: 'width: 100%; border: none; min-height: 150px',
+      loadingStyle: 'position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%)',
+    },
+    script.dataset
+  );
 
   // Set up iframe element.
   const iframeElement = document.createElement('iframe');
-  iframeElement.setAttribute('src', `${origin}/${attributes.page ?? 'blogs'}`);
-  iframeElement.setAttribute('class', attributes.class ?? 'bfc-frame');
-  iframeElement.setAttribute('loading', attributes.loading ?? 'lazy');
-  iframeElement.setAttribute('scrolling', attributes.scrolling ?? 'no');
-  iframeElement.setAttribute('style', attributes.style ?? defaultIFrameStyle);
+  iframeElement.setAttribute('class', config.class);
+  iframeElement.setAttribute('loading', config.loading);
+  iframeElement.setAttribute('scrolling', config.scrolling);
+  iframeElement.setAttribute('style', config.style);
+
+  // Set up iframe source.
+  const routes = {
+    blogs: `/category/${config.categoryId}/feeds`,
+    posts: `/category/${config.categoryId}/entries`,
+  };
+  iframeElement.setAttribute('src', `${origin}${routes[config.page as keyof typeof routes]}`);
 
   // Set up loading indicator.
   const loadingIndicator = document.createElement('div');
   loadingIndicator.innerHTML = 'Loading...';
   loadingIndicator.setAttribute('class', 'bfc-loading');
-  loadingIndicator.setAttribute('style', attributes.loadingStyle ?? defaultLoadingStyle);
+  loadingIndicator.setAttribute('style', config.loadingStyle);
 
   // Prepare iframe container.
   let iframeContainer = document.querySelector('.blog-friend-circle');
@@ -44,7 +59,7 @@
   });
 
   // Resize iframe to content height.
-  if (attributes.noResize !== 'true') {
+  if (config.noResize !== 'true') {
     window.addEventListener(
       'message',
       (event) => {

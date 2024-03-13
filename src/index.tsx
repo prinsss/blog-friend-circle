@@ -6,24 +6,29 @@ import manifest from '__STATIC_CONTENT_MANIFEST';
 
 import { Environment } from './types';
 import { BlogItem, Layout, PostItem } from './layout';
-import { api, base64ToBlob } from './utils';
+import { base64ToBlob } from './utils';
+import { api } from './api';
 
 const app = new Hono<Environment>();
 
 app.use(logger());
 
-app.get('/client.js', etag(), serveStatic({ path: './client.js', manifest }));
+app.get('/app.js', etag(), serveStatic({ path: './app.js', manifest }));
+app.get('/style.css', etag(), serveStatic({ path: './style.css', manifest }));
 
+// Home page.
 app.get('/', (c) => {
-  return c.html(<Layout page="home">Welcome</Layout>);
+  return c.html('Hello, blog-friend-circle!');
 });
 
-app.get('/blogs', async (c) => {
-  const data = await api(c).getCategoryFeeds();
+// Blog list page.
+app.get('/category/:id/feeds', async (c) => {
+  const id = Number(c.req.param().id);
+  const data = await api(c).getCategoryFeeds(id);
 
   return c.html(
-    <Layout page="blogs">
-      <div class="blog-list">
+    <Layout page="blogs" categoryId={id}>
+      <div class="list">
         {data
           .sort((a, b) => a.id - b.id)
           .map((feed) => (
@@ -34,11 +39,14 @@ app.get('/blogs', async (c) => {
   );
 });
 
-app.get('/posts', async (c) => {
-  const data = await api(c).getCategoryEntries();
+// Post list page.
+app.get('/category/:id/entries', async (c) => {
+  const id = Number(c.req.param().id);
+  const data = await api(c).getCategoryEntries(id);
+
   return c.html(
-    <Layout page="posts">
-      <div class="blog-list">
+    <Layout page="posts" categoryId={id}>
+      <div class="list">
         {data.entries.map((feed) => (
           <PostItem data={feed} />
         ))}

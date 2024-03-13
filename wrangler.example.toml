@@ -6,7 +6,6 @@ compatibility_date = "2023-12-01"
 API_ENDPOINT = "https://reader.miniflux.app"
 API_TOKEN = ""
 API_CACHE_TTL = 3600
-CATEGORY_ID = 0
 
 [[kv_namespaces]]
 binding = "API_CACHE_KV"

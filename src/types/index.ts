@@ -4,7 +4,6 @@ export type Environment = {
     API_TOKEN: string;
     API_CACHE_KV: KVNamespace;
     API_CACHE_TTL: number;
-    CATEGORY_ID: string;
   };
 };
 
