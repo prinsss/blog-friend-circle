@@ -78,7 +78,7 @@ export function api(c: Context<Environment>) {
 
       return request<{ id: number; data: string; mime_type: string }>({
         url: `/v1/icons/${iconId}`,
-        expirationTtl: 2592000, // 30 days
+        cacheTtl: 604800, // 1 week
       });
     },
   };
