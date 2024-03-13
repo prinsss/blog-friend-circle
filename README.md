@@ -1,5 +1,7 @@
 # blog-friend-circle
 
+[中文文档](README.zh.md)
+
 Show latest posts from your subscribed blogs as a more attractive friends page.
 
 Expand the circle of bloggers and readers! 💫
@@ -7,7 +9,7 @@ Expand the circle of bloggers and readers! 💫
 ## Features
 
 - 📖 Fetch latest blog posts with RSS feeds
-- 📚 Show a list of your subscribed blogs
+- 📚 Show a list of your subscribed blogs (imagine it as a shared RSS aggregator!)
 - 🗺️ Help your readers discover excellent blogs
 - 🕸️ Let indie bloggers get more subscribers
 - ✨ Designed to be embedded and fit into almost any page
@@ -30,7 +32,7 @@ As this project uses Miniflux as backend for RSS feed fetching and caching (don'
 You may need to set `CLEANUP_ARCHIVE_UNREAD_DAYS` and `CLEANUP_ARCHIVE_READ_DAYS` longer in Miniflux's [configuration file](https://miniflux.app/docs/configuration.html) to make sure that posts fetched won't be deleted too soon.
 
 ```bash
-# Fill in your Miniflux API Endpoint, API token and category ID
+# Fill in your Miniflux API Endpoint, API Token
 cp wrangler.example.toml wrangler.toml
 
 # Install dependencies (Node.js 20+ recommended)
@@ -48,8 +50,13 @@ npm run deploy
 Embedding the friend circle into your page is as easy as adding a `script` tag:
 
 ```html
-<script async src="https://circle.example.workers.dev/app.js"></script>
+<!-- Create a category in Miniflux and fill the ID here. (displayed in the address bar)  -->
+<script data-category-id="1" async src="https://circle.example.workers.dev/app.js"></script>
 ```
+
+Here is a live demo:
+
+[Friends - PRIN BLOG](https://prinsss.github.io/friends/)
 
 It will automatically initialize a `iframe` and render the friend circle on your page. You can also pass some options to customize the appearance:
 
