@@ -9,7 +9,7 @@ export const ExternalLink = (props: Hono.AnchorHTMLAttributes) => (
 );
 
 export const NavLink = (props: Hono.AnchorHTMLAttributes & { isActive?: boolean }) => (
-  <a class={`${props.isActive ? 'active' : ''} ${props.class}`} {...props} />
+  <a class={`${props.isActive ? 'active' : ''} ${props.class ?? ''}`} {...props} />
 );
 
 export const Layout = (props: PropsWithChildren<{ page: string; categoryId: number }>) => (
