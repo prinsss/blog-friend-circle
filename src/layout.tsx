@@ -80,7 +80,7 @@ export const BlogItem = ({ data }: PropsWithChildren<{ data: Feed }>) => (
 
 export const PostItem = ({ data }: PropsWithChildren<{ data: Entry }>) => (
   <article class="item">
-    <h2 class="item-title">
+    <h2 class="item-title post">
       <img src={`/icon/${data.feed.icon.icon_id}`} height="16" loading="lazy" alt={data.title} />
       <ExternalLink href={data.url}>{data.title}</ExternalLink>
     </h2>
