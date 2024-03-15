@@ -42,6 +42,12 @@ export const Layout = (props: PropsWithChildren<{ page: string; categoryId: numb
           window.parent.postMessage({ type: 'resize', value: height }, '*');
         });
 
+        window.addEventListener('message', (event) => {
+          if (event.data === 'in-iframe') {
+            document.body.classList.add('in-iframe');
+          }
+        });
+
         window.addEventListener('unload', (event) => {
           window.parent.postMessage({ type: 'resize', value: 150 }, '*');
         });

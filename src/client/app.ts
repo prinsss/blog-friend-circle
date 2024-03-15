@@ -56,6 +56,8 @@
   iframeElement.addEventListener('load', () => {
     iframeElement.style.removeProperty('opacity');
     loadingIndicator.parentElement?.removeChild(loadingIndicator);
+
+    iframeElement.contentWindow?.postMessage('in-iframe', '*');
   });
 
   // Resize iframe to content height.
