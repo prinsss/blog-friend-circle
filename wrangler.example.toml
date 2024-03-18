@@ -3,13 +3,22 @@ main = "src/index.tsx"
 compatibility_date = "2023-12-01"
 
 [vars]
+# The Miniflux API endpoint without "/v1/" and trailing slash.
 API_ENDPOINT = "https://reader.miniflux.app"
+# Generate your API token in "Settings > API Keys".
 API_TOKEN = ""
+# How long should the API response be cached in seconds.
 API_CACHE_TTL = 3600
+# A comma-separated list of category IDs to allow access to. (e.g. "1,2,3")
+# Leave empty to allow all categories.
+CATEGORY_ALLOWLIST = ""
 
 [[kv_namespaces]]
 binding = "API_CACHE_KV"
+# Run `npx wrangler kv:namespace create API_CACHE_KV` to create the KV namespace.
 id = ""
+# For developers only.
+# Run `npx wrangler kv:namespace create API_CACHE_KV --preview` to generate.
 preview_id = ""
 
 [site]

@@ -6,6 +6,7 @@ import manifest from '__STATIC_CONTENT_MANIFEST';
 
 import { Environment } from './types';
 import { BlogItem, Layout, PostItem } from './layout';
+import { categoryAllowlist } from './middlewares';
 import { base64ToBlob } from './utils';
 import { api } from './api';
 
@@ -37,7 +38,7 @@ app.get('/', (c) => {
 });
 
 // Blog list page.
-app.get('/category/:id/feeds', async (c) => {
+app.get('/category/:id/feeds', categoryAllowlist(), async (c) => {
   const id = Number(c.req.param().id);
   const data = await api(c).getCategoryFeeds(id);
 
@@ -55,7 +56,7 @@ app.get('/category/:id/feeds', async (c) => {
 });
 
 // Post list page.
-app.get('/category/:id/entries', async (c) => {
+app.get('/category/:id/entries', categoryAllowlist(), async (c) => {
   const id = Number(c.req.param().id);
   const data = await api(c).getCategoryEntries(id);
 
