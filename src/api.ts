@@ -1,6 +1,8 @@
 import { Context } from 'hono';
-import { Entry, Environment, Feed } from './types';
+import { ApiErrorResponse, Entry, Environment, Feed } from './types';
 import { MemorizedFetchOptions, memorizedFetch } from './utils';
+import { HTTPException } from 'hono/http-exception';
+import { StatusCode } from 'hono/utils/http-status';
 
 export type Options = Omit<MemorizedFetchOptions, 'c'> & {
   url: string;
@@ -40,6 +42,13 @@ export function api(c: Context<Environment>) {
     });
 
     const data = await response.json<T>();
+
+    // See: https://miniflux.app/docs/api.html#error-response
+    const error = (data as ApiErrorResponse).error_message;
+    if (error) {
+      throw new HTTPException(response.status as StatusCode, { message: error });
+    }
+
     return data;
   };
 

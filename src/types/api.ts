@@ -1,3 +1,7 @@
+export interface ApiErrorResponse {
+  error_message: string;
+}
+
 export interface Entry {
   id: number;
   user_id: number;
