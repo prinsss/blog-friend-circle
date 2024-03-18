@@ -75,10 +75,11 @@ npm run deploy
   // 设置 iframe 元素的 scrolling 属性。可用选项: "yes", "no", "auto".
   data-scrolling="no"
   // 设置 iframe 元素的内联样式。
-  data-style="width: 100%; border: none; min-height: 150px"
+  data-style="width:100%;border:none;color-scheme:normal;min-height:150px"
   // 设置加载文本元素的内联样式。
-  data-loading-style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%)"
+  data-loading-style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)"
   // 禁止 iframe 高度自适应。
+  // 如果希望 iframe 内容可滚动，请将此选项设置为 "true"。
   data-no-resize="false"
   src="https://circle.example.workers.dev/app.js"
   async

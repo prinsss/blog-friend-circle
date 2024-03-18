@@ -12,8 +12,8 @@
       loading: 'lazy',
       scrolling: 'no',
       noResize: 'false',
-      style: 'width: 100%; border: none; min-height: 150px',
-      loadingStyle: 'position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%)',
+      style: 'width:100%;border:none;color-scheme:normal;min-height:150px',
+      loadingStyle: 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)',
     },
     script.dataset
   );

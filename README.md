@@ -73,10 +73,11 @@ It will automatically initialize a `iframe` and render the friend circle on your
   // Set scrolling attribute of iframe element. Available options: "yes", "no", "auto".
   data-scrolling="no"
   // Set inline style of iframe element.
-  data-style="width: 100%; border: none; min-height: 150px"
+  data-style="width:100%;border:none;color-scheme:normal;min-height:150px"
   // Set inline style of loading text element.
-  data-loading-style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%)"
+  data-loading-style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)"
   // Disable the behavior of resizing iframe to fit its content.
+  // Set this to "true" if you want the content of iframe to be scrollable.
   data-no-resize="false"
   src="https://circle.example.workers.dev/app.js"
   async
