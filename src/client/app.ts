@@ -12,6 +12,7 @@
       loading: 'lazy',
       scrolling: 'no',
       noResize: 'false',
+      theme: 'auto',
       style: 'width:100%;border:none;color-scheme:normal;min-height:150px',
       loadingStyle: 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)',
     },
@@ -57,7 +58,9 @@
     iframeElement.style.removeProperty('opacity');
     loadingIndicator.parentElement?.removeChild(loadingIndicator);
 
-    iframeElement.contentWindow?.postMessage('in-iframe', '*');
+    // Pass arguments to iframe.
+    iframeElement.contentWindow?.postMessage({ type: 'in-iframe', value: true }, '*');
+    iframeElement.contentWindow?.postMessage({ type: 'theme', value: config.theme }, '*');
   });
 
   // Resize iframe to content height.

@@ -1,4 +1,4 @@
-:root {
+.theme-light {
   --bg-color: #fff;
   --nav-link-color: #333;
   --item-border-color: #ddd;
@@ -6,13 +6,21 @@
   --item-meta-color: #777;
 }
 
+.theme-dark {
+  --bg-color: #181a1b;
+  --nav-link-color: #eee;
+  --item-border-color: #666;
+  --item-title-color: #ddd;
+  --item-meta-color: #aaa;
+}
+
+.theme-auto {
+  .theme-light();
+}
+
 @media (prefers-color-scheme: dark) {
-  :root {
-    --bg-color: #181a1b;
-    --nav-link-color: #eee;
-    --item-border-color: #666;
-    --item-title-color: #ddd;
-    --item-meta-color: #aaa;
+  .theme-auto {
+    .theme-dark();
   }
 }
 

@@ -20,7 +20,7 @@ export const Layout = (props: PropsWithChildren<{ page: string; categoryId: numb
       <title>blog-friend-circle</title>
       <link rel="stylesheet" href="/style.css" />
     </head>
-    <body>
+    <body class="theme-auto">
       <nav>
         <NavLink href={`/category/${props.categoryId}/entries`} isActive={props.page === 'posts'}>
           Posts
@@ -43,8 +43,12 @@ export const Layout = (props: PropsWithChildren<{ page: string; categoryId: numb
         });
 
         window.addEventListener('message', (event) => {
-          if (event.data === 'in-iframe') {
+          const { type, value } = event.data;
+          if (type === 'in-iframe') {
             document.body.classList.add('in-iframe');
+          } else if (type === 'theme') {
+            document.body.classList.remove('theme-auto');
+            document.body.classList.add('theme-' + value);
           }
         });
 
