@@ -74,6 +74,8 @@ npm run deploy
   data-loading="lazy"
   // 设置 iframe 元素的 scrolling 属性。可用选项: "yes", "no", "auto".
   data-scrolling="no"
+  // 设置内容的颜色方案。可用选项: "auto", "light", "dark".
+  data-theme="auto"
   // 设置 iframe 元素的内联样式。
   data-style="width:100%;border:none;color-scheme:normal;min-height:150px"
   // 设置加载文本元素的内联样式。
