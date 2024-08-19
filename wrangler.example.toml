@@ -16,7 +16,7 @@ CATEGORY_ALLOWLIST = ""
 [[kv_namespaces]]
 binding = "API_CACHE_KV"
 # Run `npx wrangler kv:namespace create API_CACHE_KV` to create the KV namespace.
-id = ""
+id = "replace-with-your-own"
 # For developers only.
 # Run `npx wrangler kv:namespace create API_CACHE_KV --preview` to generate.
 preview_id = ""
